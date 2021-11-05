@@ -1,42 +1,52 @@
 import { useState } from "react";
-import Icon from "@ant-design/icons";
+import {WarningOutlined} from "@ant-design/icons";
 import {
   Row,
   Col,
   Form,
   Input,
   Button,
-  Divider,
-  notification,
-  message,
+  notification, message,
 } from "antd";
+
 import styles from "../../styles/Auth.module.css";
-import authErrorHandler from "../../util/authErrorHandler";
 import { FormArgs, AuthService } from "../../service/AuthService";
+import useAuth from "../../hook/auth";
+import { useNavigate } from "react-router-dom";
+import SecureLS from "secure-ls";
+var ls = new SecureLS();
 
 function Login() {
+  const { setUser } = useAuth();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const onFinish = async ({ email, password }: FormArgs) => {
+  const onFinish = ({ email, password }: FormArgs) => {
     setLoading(true);
-    const { error } = await AuthService.login({
+
+    var authResult = AuthService.login({
       email,
       password,
     });
-    setLoading(false);
 
-    if (error) {
-        console.log("erroooor", error)
-      return notification.error({
-        message: authErrorHandler(error.error || ""),
-        duration: 5,
-      });
-    }
-
-    message.success("success 👏🏾");
+    authResult
+    .then((res) => {
+        console.log(res)
+        setUser(res);
+        ls.set('user', {data: res});
+        message.success("Successfully logged in")
+        setLoading(false);
+        navigate('/home');
+    })
+    .catch((err) => {
+        notification.error({
+            message: "Failed to log you in",
+            description: err?.error,
+            icon: <WarningOutlined  style={{ color: 'red' }} />
+        })
+        setLoading(false);
+    })
   };
-
-
 
 
   return (

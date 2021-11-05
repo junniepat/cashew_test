@@ -1,29 +1,24 @@
-import { useRouter } from "next/router";
 import React from "react";
-import useAuth from "./auth";
+import { Route, Navigate } from 'react-router-dom';
 
-export function withPublic(Component) {
-  return function WithPublic(props) {
-    const auth = useAuth();
-    const router = useRouter();
 
-    if (auth.user) {
-      router.replace("/");
-      return <h1>Loading...</h1>;
+
+export const PrivateRoute = ({ component: Component, redirectTo, isAuth, path, ...props }) => {
+    if(!isAuth) {
+        return <Navigate to={redirectTo} />;
     }
-    return <Component auth={auth} {...props} />;
-  };
-}
+    return <Route path={path} element={<Component />} />
+};
 
-export function withProtected(Component) {
-  return function WithProtected(props) {
-    const auth = useAuth();
-    const router = useRouter();
+// export function withProtected(Component) {
+//   return function WithProtected(props) {
+//     const auth = useAuth();
 
-    if (!auth.user) {
-      router.replace("/auth/login");
-      return <h1>Loading...</h1>;
-    }
-    return <Component auth={auth} {...props} />;
-  };
-}
+
+//     if (!auth.user) {
+//         <Route path="/" />;
+//       return <h1>Loading...</h1>;
+//     }
+//     return <Component auth={auth} {...props} />;
+//   };
+// }

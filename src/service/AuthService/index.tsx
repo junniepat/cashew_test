@@ -7,14 +7,15 @@ export type FormArgs = {
   };
 
   export const AuthService = {
-    login: async ({ email, password }: FormArgs) => {
-        try {
-            const user = await axios.post(`https://reqres.in/api/login`, {
-                email, password
-            });
-            return { user };
-          } catch (error) {
-            return { error: (error as Error)?.response?.data };
-          }
+    login: ({ email, password }: FormArgs) => {
+        return axios.post(`https://reqres.in/api/login`, {
+            email, password
+        })
+        .then((res) => {
+            return res.data;
+        })
+        .catch((error) => {
+            throw error?.response?.data;
+        })
     }
 }

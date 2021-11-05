@@ -6,11 +6,11 @@
   .container__image_section {
     flex: 1;
     display: none;
-    background-color: #0d2a61;
+    background-color: #f7b500;
   }
   
   .container__image_section__heading {
-    color: #ffff;
+    color: rgb(14, 13, 13);
   }
   
   .container__auth_section {
