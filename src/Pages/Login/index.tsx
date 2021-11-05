@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {WarningOutlined} from "@ant-design/icons";
 import {
   Row,
@@ -17,9 +17,15 @@ import SecureLS from "secure-ls";
 var ls = new SecureLS();
 
 function Login() {
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!user) {
+        navigate('/home')
+    }
+  }, [])
 
   const onFinish = ({ email, password }: FormArgs) => {
     setLoading(true);

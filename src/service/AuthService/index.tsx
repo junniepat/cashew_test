@@ -17,5 +17,9 @@ export type FormArgs = {
         .catch((error) => {
             throw error?.response?.data;
         })
+    },
+
+    logout: () => {
+
     }
 }
