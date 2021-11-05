@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .container__image_section {
+    flex: 1;
+    display: none;
+    background-color: #0d2a61;
+  }
+  
+  .container__image_section__heading {
+    color: #ffff;
+  }
+  
+  .container__auth_section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .container__auth_section__input_section,
+  .container__auth_section__social_section {
+    width: 100%;
+  }
+  
+  .container__auth_section__social_section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  
+  .container__auth_section__input_section__have_account_text {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  @media (min-width: 1280px) {
+    .container__image_section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container__auth_section {
+      padding: 0px;
+    }
+    .container__auth_section__input_section,
+    .container__auth_section__social_section {
+      width: 70%;
+    }
+  }
